@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ColumnRowScreen extends StatelessWidget {
+class ColumnRowScreen extends StatefulWidget {
   const ColumnRowScreen({super.key});
+
+  @override
+  State<ColumnRowScreen> createState() => _ColumnRowScreenState();
+}
+
+class _ColumnRowScreenState extends State<ColumnRowScreen> {
+  // Variables de estado requeridas para la Fase 4
+  bool _isRow = false;
+  MainAxisAlignment _mainAlignment = MainAxisAlignment.center;
+  CrossAxisAlignment _crossAlignment = CrossAxisAlignment.center;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 250, 250, 250),
+      backgroundColor: const Color(0xFFF8F8FA),
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -22,41 +32,79 @@ class ColumnRowScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 202, 40),
-                      border: Border.all(color: Colors.black87, width: 1),
+              child: _isRow
+                  ? Row(
+                      mainAxisAlignment: _mainAlignment,
+                      crossAxisAlignment: _crossAlignment,
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFCA28),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("A", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                        Container(
+                          width: 100,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF66BB6A),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("B", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                        Container(
+                          width: 80,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF2962FF),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("C", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      mainAxisAlignment: _mainAlignment,
+                      crossAxisAlignment: _crossAlignment,
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFCA28),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("A", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                        Container(
+                          width: 100,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF66BB6A),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("B", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                        Container(
+                          width: 80,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF2962FF),
+                            border: Border.all(color: Colors.black87, width: 1),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text("C", style: TextStyle(color: Colors.black, fontSize: 16)),
+                        ),
+                      ],
                     ),
-                    alignment: Alignment.center,
-                    child: const Text("A", style: TextStyle(color: Colors.black, fontSize: 16)),
-                  ),
-                  Container(
-                    width: 100,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 102, 187, 106),
-                      border: Border.all(color: Colors.black87, width: 1),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text("B", style: TextStyle(color: Colors.black, fontSize: 16)),
-                  ),
-                  Container(
-                    width: 80,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 41, 98, 255),
-                      border: Border.all(color: Colors.black87, width: 1),
-                    ),
-                    alignment: Alignment.center,
-                    child: const Text("C", style: TextStyle(color: Colors.black, fontSize: 16)),
-                  ),
-                ],
-              ),
             ),
           ),
           Padding(
@@ -73,8 +121,12 @@ class ColumnRowScreen extends StatelessWidget {
                     const Spacer(),
                     const Text("Column", style: TextStyle(color: Colors.black87)),
                     Switch(
-                      value: false,
-                      onChanged: (val) {},
+                      value: _isRow,
+                      onChanged: (val) {
+                        setState(() {
+                          _isRow = val;
+                        });
+                      },
                       activeColor: Colors.blue,
                       inactiveThumbColor: Colors.white,
                       inactiveTrackColor: Colors.grey[300],
@@ -91,46 +143,67 @@ class ColumnRowScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE0E0E0),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "start",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
-                      ),
-                    ),
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFA0C4FF),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "center",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _mainAlignment = MainAxisAlignment.start;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _mainAlignment == MainAxisAlignment.start ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "start",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE0E0E0),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _mainAlignment = MainAxisAlignment.center;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _mainAlignment == MainAxisAlignment.center ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "center",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "end",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _mainAlignment = MainAxisAlignment.end;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _mainAlignment == MainAxisAlignment.end ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "end",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
                     ),
                   ],
@@ -144,46 +217,67 @@ class ColumnRowScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE0E0E0),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "start",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
-                      ),
-                    ),
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFA0C4FF),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "center",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _crossAlignment = CrossAxisAlignment.start;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _crossAlignment == CrossAxisAlignment.start ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "start",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 80,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE0E0E0),
-                        border: Border.all(color: Colors.black54, width: 1),
-                        borderRadius: BorderRadius.circular(4),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _crossAlignment = CrossAxisAlignment.center;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _crossAlignment == CrossAxisAlignment.center ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "center",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "end",
-                        style: TextStyle(color: Colors.black87, fontSize: 14),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _crossAlignment = CrossAxisAlignment.end;
+                        });
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: _crossAlignment == CrossAxisAlignment.end ? const Color(0xFFA0C4FF) : const Color(0xFFE0E0E0),
+                          border: Border.all(color: Colors.black54, width: 1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "end",
+                          style: TextStyle(color: Colors.black87, fontSize: 14),
+                        ),
                       ),
                     ),
                   ],

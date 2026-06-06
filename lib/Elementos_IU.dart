@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ElementosUIWidget extends StatelessWidget {
+class ElementosUIWidget extends StatefulWidget {
   const ElementosUIWidget({super.key});
+
+  @override
+  State<ElementosUIWidget> createState() => _ElementosUIWidgetState();
+}
+
+class _ElementosUIWidgetState extends State<ElementosUIWidget> {
+  double _fontSize = 38.0;
+  bool _isBold = false;
+  bool _isItalic = false;
+  List<bool> _alignSelections = [false, true, false]; // [Izquierda, Centro, Derecha]
+  Color _textColor = const Color.fromARGB(255, 25, 118, 210);
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +31,22 @@ class ElementosUIWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: Center(
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              alignment: _alignSelections[0]
+                  ? Alignment.centerLeft
+                  : _alignSelections[2]
+                      ? Alignment.centerRight
+                      : Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 "Hola Flutter",
                 style: TextStyle(
-                  fontSize: 38,
-                  color: const Color.fromARGB(255, 25, 118, 210),
-                  fontWeight: FontWeight.normal,
+                  fontSize: _fontSize,
+                  color: _textColor,
+                  fontWeight: _isBold ? FontWeight.bold : FontWeight.normal,
+                  fontStyle: _isItalic ? FontStyle.italic : FontStyle.normal,
                 ),
               ),
             ),
@@ -37,13 +56,19 @@ class ElementosUIWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "fontSize: 38",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                Text(
+                  "fontSize: ${_fontSize.toInt()}",
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
                 Slider(
-                  value: 0.5,
-                  onChanged: (double value) {},
+                  value: _fontSize,
+                  min: 10.0,
+                  max: 100.0,
+                  onChanged: (double value) {
+                    setState(() {
+                      _fontSize = value;
+                    });
+                  },
                   activeColor: Colors.grey[500],
                   inactiveColor: Colors.grey[300],
                   thumbColor: Colors.white,
@@ -54,25 +79,39 @@ class ElementosUIWidget extends StatelessWidget {
                   children: [
                     const Text("Bold: ", style: TextStyle(fontWeight: FontWeight.bold)),
                     Switch(
-                      value: false,
-                      onChanged: (bool value) {},
+                      value: _isBold,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _isBold = value;
+                        });
+                      },
                     ),
                     const SizedBox(width: 30),
                     const Text("Italic: ", style: TextStyle(fontWeight: FontWeight.bold)),
                     Switch(
-                      value: false,
-                      onChanged: (bool value) {},
+                      value: _isItalic,
+                      onChanged: (bool value) {
+                        setState(() {
+                          _isItalic = value;
+                        });
+                      },
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Center(
                   child: ToggleButtons(
-                    isSelected: const [false, true, false], 
-                    onPressed: (int index) {},
+                    isSelected: _alignSelections,
+                    onPressed: (int index) {
+                      setState(() {
+                        for (int i = 0; i < _alignSelections.length; i++) {
+                          _alignSelections[i] = i == index;
+                        }
+                      });
+                    },
                     color: Colors.blue,
                     selectedColor: Colors.blue,
-                    fillColor: Colors.blue,
+                    fillColor: Colors.blue.withOpacity(0.1),
                     borderColor: Colors.grey[200],
                     selectedBorderColor: Colors.grey[200],
                     borderRadius: BorderRadius.circular(4),
@@ -93,40 +132,68 @@ class ElementosUIWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 229, 57, 53),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black87, width: 1.5),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _textColor = const Color.fromARGB(255, 229, 57, 53);
+                        });
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 229, 57, 53),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black87, width: 1.5),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 24, 24, 24),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black87, width: 1.5),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _textColor = const Color.fromARGB(255, 24, 24, 24);
+                        });
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 24, 24, 24),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black87, width: 1.5),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 104, 159, 56),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black87, width: 1.5),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _textColor = const Color.fromARGB(255, 104, 159, 56);
+                        });
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 104, 159, 56),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black87, width: 1.5),
+                        ),
                       ),
                     ),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 25, 118, 210),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.black87, width: 1.5),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _textColor = const Color.fromARGB(255, 25, 118, 210);
+                        });
+                      },
+                      child: Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 25, 118, 210),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.black87, width: 1.5),
+                        ),
                       ),
                     ),
                   ],
